@@ -56,12 +56,16 @@
           rows="3"
         ></textarea>
 
-        <button
-          type="submit"
-          class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
-        >
-          Enviar Comentário
-        </button>
+        <!-- Botão com animação -->
+        <div class="relative inline-block group">
+          <span class="absolute inset-0 rounded-xl bg-blue-600 opacity-75 scale-100 transition group-active:animate-ping"></span>
+          <button
+            type="submit"
+            class="relative bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 active:scale-95 z-10"
+          >
+            Enviar Comentário
+          </button>
+        </div>
       </form>
 
       <div id="commentsSection" class="space-y-4">
@@ -111,3 +115,5 @@
         }
       });
     </script>
+  </body>
+</html>
