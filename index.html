@@ -42,6 +42,13 @@
           placeholder="https://exemplo.com"
         />
 
+        <label class="block mb-2 text-gray-300 font-medium">Data da Atividade:</label>
+        <input
+          type="date"
+          id="activityDate"
+          class="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-purple-400"
+        />
+
         <label class="block mb-2 text-gray-300 font-medium">Comentário do Professor Luan (opcional):</label>
         <textarea
           id="teacherComment"
@@ -68,6 +75,7 @@
       const commentText = document.getElementById('commentText');
       const activityLink = document.getElementById('activityLink');
       const teacherComment = document.getElementById('teacherComment');
+      const activityDate = document.getElementById('activityDate');
       const commentsSection = document.getElementById('commentsSection');
 
       commentForm.addEventListener('submit', function (e) {
@@ -77,21 +85,29 @@
         const comment = commentText.value.trim();
         const link = activityLink.value.trim();
         const profComment = teacherComment.value.trim();
+        const date = activityDate.value;
 
         if (name && comment) {
           const commentDiv = document.createElement('div');
           commentDiv.className = 'bg-gray-700 p-4 rounded-xl shadow';
+
+          const formattedDate = date
+            ? new Date(date).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })
+            : '';
+
           commentDiv.innerHTML = `
             <h3 class="font-semibold text-blue-400">${name}</h3>
+            ${formattedDate ? `<p class="text-sm text-gray-400 mb-1">Data da Atividade: ${formattedDate}</p>` : ''}
             <p class="text-gray-100 mb-2">${comment}</p>
             ${link ? `<a href="${link}" target="_blank" class="inline-block mt-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600 transition">Abrir Atividade</a>` : ''}
             ${profComment ? `<div class="mt-4 p-3 bg-green-900 rounded-xl"><strong class="text-green-300">Comentário do Professor:</strong><p class="text-green-100 mt-1">${profComment}</p></div>` : ''}
           `;
           commentsSection.prepend(commentDiv);
-
           commentForm.reset();
         }
       });
     </script>
-  </body>
-</html>
