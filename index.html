@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comentários dos Alunos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen p-6 dark">
+    <div class="max-w-3xl mx-auto bg-gray-800 rounded-2xl shadow-md p-6">
+      <h1 class="text-3xl font-bold mb-4 text-center text-blue-400">
+        Comentários sobre Atividades Diárias
+      </h1>
+
+      <form id="commentForm" class="mb-6">
+        <label class="block mb-2 text-gray-300 font-medium">Nome do Aluno:</label>
+        <input
+          type="text"
+          id="studentName"
+          class="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required
+        />
+
+        <label class="block mb-2 text-gray-300 font-medium">Comentário do Aluno:</label>
+        <textarea
+          id="commentText"
+          class="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          rows="4"
+          required
+        ></textarea>
+
+        <label class="block mb-2 text-gray-300 font-medium">Link da Atividade:</label>
+        <input
+          type="url"
+          id="activityLink"
+          class="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="https://exemplo.com"
+        />
+
+        <label class="block mb-2 text-gray-300 font-medium">Comentário do Professor Luan (opcional):</label>
+        <textarea
+          id="teacherComment"
+          class="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
+          rows="3"
+        ></textarea>
+
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+        >
+          Enviar Comentário
+        </button>
+      </form>
+
+      <div id="commentsSection" class="space-y-4">
+        <!-- Comentários aparecerão aqui -->
+      </div>
+    </div>
+
+    <script>
+      const commentForm = document.getElementById('commentForm');
+      const studentName = document.getElementById('studentName');
+      const commentText = document.getElementById('commentText');
+      const activityLink = document.getElementById('activityLink');
+      const teacherComment = document.getElementById('teacherComment');
+      const commentsSection = document.getElementById('commentsSection');
+
+      commentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = studentName.value.trim();
+        const comment = commentText.value.trim();
+        const link = activityLink.value.trim();
+        const profComment = teacherComment.value.trim();
+
+        if (name && comment) {
+          const commentDiv = document.createElement('div');
+          commentDiv.className = 'bg-gray-700 p-4 rounded-xl shadow';
+          commentDiv.innerHTML = `
+            <h3 class="font-semibold text-blue-400">${name}</h3>
+            <p class="text-gray-100 mb-2">${comment}</p>
+            ${link ? `<a href="${link}" target="_blank" class="inline-block mt-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600 transition">Abrir Atividade</a>` : ''}
+            ${profComment ? `<div class="mt-4 p-3 bg-green-900 rounded-xl"><strong class="text-green-300">Comentário do Professor:</strong><p class="text-green-100 mt-1">${profComment}</p></div>` : ''}
+          `;
+          commentsSection.prepend(commentDiv);
+
+          commentForm.reset();
+        }
+      });
+    </script>
+  </body>
+</html>
